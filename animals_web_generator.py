@@ -10,12 +10,15 @@ def load_data(filepath):
 def get_info_for_each_animal(animals_data):
     output = ''
     for animal in animals_data:
-        output += f'Name: {animal['name']}\n'
-        output += f'Diet: {animal['taxonomy']['order']}\n'
-        output += f'Location: {animal['locations'][0]}\n'
+        output += '<li class="cards__item">'
+        output += f'Name: {animal['name']}<br/>\n'
+        output += f'Diet: {animal['taxonomy']['order']}<br/>\n'
+        output += f'Location: {animal['locations'][0]}<br/>\n'
         try:
-            output += f'Type: {animal['characteristics']['type']}\n'
+            output += f'Type: {animal['characteristics']['type']}<br/>\n'
+            output += '</li>'
         except KeyError:
+            output += '</li>'
             continue
     return output
 
