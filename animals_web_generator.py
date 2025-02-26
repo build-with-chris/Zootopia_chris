@@ -11,11 +11,11 @@ def get_info_for_each_animal(animals_data):
     output = ''
     for animal in animals_data:
         output += '<li class="cards__item">'
-        output += f'Name: {animal['name']}<br/>\n'
-        output += f'Diet: {animal['taxonomy']['order']}<br/>\n'
-        output += f'Location: {animal['locations'][0]}<br/>\n'
+        output += f'<div class="card__title">{animal['name']}</div><br/>'
+        output += f'<strong>Diet:</strong> {animal['taxonomy']['order']}<br/><br/>'
+        output += f'<strong>Location:</strong> {animal['locations'][0]}<br/><br/>'
         try:
-            output += f'Type: {animal['characteristics']['type']}<br/>\n'
+            output += f'<strong>Type:</strong> {animal['characteristics']['type']}<br/><br/>'
             output += '</li>'
         except KeyError:
             output += '</li>'
