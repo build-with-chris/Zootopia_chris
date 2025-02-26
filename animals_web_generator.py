@@ -1,4 +1,6 @@
 import json
+from bs4 import BeautifulSoup
+import requests
 
 def load_data(filepath):
     with open(filepath, "r") as handle:
@@ -6,22 +8,38 @@ def load_data(filepath):
 
 
 def get_info_for_each_animal(animals_data):
+    output = ''
     for animal in animals_data:
-        print(f'Name: {animal['name']}')
-        print(f'Diet: {animal['taxonomy']['order']}')
-        print(f'Location: {animal['locations'][0]}')
+        output += f'Name: {animal['name']}\n'
+        output += f'Diet: {animal['taxonomy']['order']}\n'
+        output += f'Location: {animal['locations'][0]}\n'
         try:
-            print(f'Type: {animal['characteristics']['type']}')
+            output += f'Type: {animal['characteristics']['type']}\n'
         except KeyError:
-            print()
             continue
+    return output
 
-        print()
+
+
+def content_temp(html):
+    HTMLFile = open(html, 'r')
+    index = HTMLFile.read()
+    return index
+
+def write_new_html(new_code):
+    new = open('animals.html', 'w')
+    new.write(new_code)
+    new.close()
 
 
 def main():
     animals_data = load_data('animals_data.json')
-    get_info_for_each_animal(animals_data)
+    content = get_info_for_each_animal(animals_data)
+    code = content_temp('animals_template.html')
+    new_code = code.replace('__REPLACE_ANIMALS_INFO__', content)
+    write_new_html(new_code)
+
+
 
 if __name__ == "__main__":
     main()
