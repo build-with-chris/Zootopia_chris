@@ -1,9 +1,13 @@
 import requests
-from plotly.figure_factory.utils import list_of_options
+import os
+from dotenv import load_dotenv
 
-NAME = 'fox'
-Key = "OraJs8wSoCxsuaSufdDG5A==geBlmOnQQKafik7c"
-URL = 'https://api.api-ninjas.com/v1/animals?name={}'.format(NAME)
+
+load_dotenv()
+API_KEY = os.getenv('API_KEY')
+if not API_KEY:
+    print("Nicht geladen")
+URL = 'https://api.api-ninjas.com/v1/animals?name={}'
 
 
 def fetch_data(animal_name):
@@ -11,11 +15,12 @@ def fetch_data(animal_name):
     Fetches the animals data for the animal 'animal_name'.
     Returns: a list of animals, each animal is a dictionary:
     """
-    response = requests.get(URL, headers={'X-Api-Key': Key})
+    response = requests.get(URL.format(animal_name), headers={'X-Api-Key': API_KEY})
     if response.status_code == requests.codes.ok:
         list_of_type = response.json()
     else:
         print("Error:", response.status_code, response.text)
+        return "<h2>No animal found.</h2>"
     output_list = []
     for animal in list_of_type:
         if animal_name.lower() in animal['name'].lower():
@@ -36,5 +41,3 @@ def fetch_data(animal_name):
     #         except KeyError:
     #             print()
     #     return animal_dict
-
-print(fetch_data("Fox"))
