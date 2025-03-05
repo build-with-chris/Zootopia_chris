@@ -1,9 +1,4 @@
-import json
-
-def load_data(filepath):
-    """simple func to load json data from local dir"""
-    with open(filepath, "r") as handle:
-        return json.load(handle)
+from data_fetcher import fetch_data
 
 
 def get_info_for_each_animal(animals_data):
@@ -47,7 +42,8 @@ def write_new_html(new_code):
 
 def main():
     """get the data needed and convert it into a new HTML file"""
-    animals_data = load_data('animals_data.json')
+    animal_name = input("What animals do you want to display? ")
+    animals_data = fetch_data(animal_name)
     content = get_info_for_each_animal(animals_data)
     code = content_temp('animals_template.html')
     new_code = code.replace('__REPLACE_ANIMALS_INFO__', content)
