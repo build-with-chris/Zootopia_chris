@@ -13,15 +13,22 @@ def serialize_animal(animal):
     """Sterilizing the data into HTML conform text"""
     output = ''
     output += '<li class="cards__item">'
-    output += f'<div class="card__title">{animal['name']}</div><br/>'
+    output += f'<div class="card__title">{animal["name"]}</div><br/>'
     output += '<div class="card__text">'
     output += '<ul>'
-    output += f'<li><strong>Diet:</strong> {animal['taxonomy']['order']}</li>'
-    output += f'<li><strong>Location:</strong> {animal['locations'][0]}</li>'
     try:
-        output += f'<li><strong>Type:</strong> {animal['characteristics']['type']}</li>'
-        output += '</ul></div></li>'
+        output += f'<li><strong>Diet:</strong> {animal["taxonomy"]["order"]}</li>'
     except KeyError:
+        pass
+    try:
+        output += f'<li><strong>Location:</strong> {animal["locations"][0]}</li>'
+    except KeyError:
+        pass
+    try:
+        output += f'<li><strong>Type:</strong> {animal["characteristics"]["type"]}</li>'
+    except KeyError:
+        pass
+    finally:
         output += '</ul></div></li>'
     return output
 
