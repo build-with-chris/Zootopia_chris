@@ -53,7 +53,10 @@ def main():
     animals_data = fetch_data(animal_name)
     content = get_info_for_each_animal(animals_data)
     code = content_temp('animals_template.html')
-    new_code = code.replace('__REPLACE_ANIMALS_INFO__', content)
+    if content != "":
+        new_code = code.replace('__REPLACE_ANIMALS_INFO__', content)
+    else:
+        new_code = code.replace('__REPLACE_ANIMALS_INFO__', f"<h2> The animal {animal_name} doesn't exist.</h2>")
     write_new_html(new_code)
 
 
